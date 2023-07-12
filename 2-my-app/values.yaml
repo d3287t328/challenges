@@ -1,0 +1,3 @@
+replicaCount: 3
+serviceName: "mynginx"
+image: "nginx:1.18.0"

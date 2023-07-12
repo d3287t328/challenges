@@ -1,0 +1,191 @@
+# First idea
+
+Run the request through autopilot and explain the output. This was my first try using
+gpt-4 API. I decided to give autopilot 3 tries to write this task. The first try was
+adequate for solving the first challenge. The 2nd one was valid but more complex and 
+was pushing the limits of a proof of concept. The 3rd one was unusable, only providing
+text output.
+
+# 2nd idea
+
+After this I considered if I could get this running inside a container using
+devcontainer.json but my attempts at getting k0s or kind working in a docker provider
+did not work. This turned out to be non-trivial and I settled on running on kind.
+
+The helm and python steps were accomplished with no difficulty. The python chatlog with
+chatgpt-4 is included in this directory. The python script data validation could be 
+improved but is adequate and not overly long.
+
+# Ran out of time
+
+I burned too much time on my second idea and did not have time to complete challenges 5-9.
+
+Source for below script: https://github.com/unconv/gpt-autopilot
+
+16:40:17 a@fedora ~/code/gpt-autopilot master $ ./gpt-autopilot.py --versions 3
+#######################################
+# USING MODEL:             gpt-4-0613 #
+#######################################
+
+GPT: What would you like me to do?
+You: write for me a prompt to instruct chatgpt-4 how to Write a Kubernetes StatefulSet to run
+The one container of our choosing, using persistent volume claims,
+resource requests and resource limits.
+
+INFO:     Creating 3 versions...
+
+GPT: Do you want me to automatically detect a custom system message?
+You (y/n): 
+ERROR:    Please type 'y' or 'n'
+
+GPT: Do you want me to automatically detect a custom system message?
+You (y/n): 
+ERROR:    Please type 'y' or 'n'
+
+GPT: Do you want me to automatically detect a custom system message?
+You (y/n): y
+
+GPT-API:  Detecting system message...
+
+Detected project type 'default'.
+Do you want to use this system message?
+You (y/n): y
+
+SYSTEM:   Using system message 'default'
+
+FUNCTION: Listing files in project directory
+
+## VERSION 1 (temp: 1.0) ##
+
+GPT: Do you want me to make your prompt better?
+You (y/n): y
+
+Making prompt better...
+
+## Better prompt: ##
+Design a detailed guide for an AI chatbot, specifically the future ChatGPT-4 model, on creating a Kubernetes StatefulSet. The guide should comprehensively describe the creation of a StatefulSet, the purpose of these in maintaining stateful applications in Kubernetes, details to specify for pod management, and the role of Volumes for persistent storage. The prompt must be composed in specifics, addressing every mentionable nuance that an AI would need for accurate understanding and subsequent implementation.
+
+GPT: Do you want to use this prompt?
+You (y/n): y
+
+Using better prompt...
+
+GPT-API:  Waiting... OK! (+444 tokens, total 1134 / 0.04 USD)
+
+GPT: Should I create a single file for this guide or multiple files addressing different aspects?
+You: single
+
+GPT: What should be the format of the guide? For example, is it a markdown file, plain text, or something else?
+You: markdown file
+
+GPT-API:  Waiting... OK! (+471 tokens, total 1605 / 0.05 USD)
+
+GPT: What should be the name of the markdown file?
+You: README.md
+
+GPT-API:  Waiting... OK! (+492 tokens, total 2097 / 0.07 USD)
+
+GPT: What should be the name of the markdown file?
+You: README.md
+
+GPT-API:  Waiting... OK! (+530 tokens, total 2627 / 0.09 USD)
+
+GPT: Should this guide include the setup and installation of Kubernetes or does it start with the assumption that the user already has a Kubernetes cluster set up?
+You: no setup and install guide for kubernetes.
+
+OUTLINE:  Creating an outline for the project
+GPT-API:  Waiting... OK! (+932 tokens, total 3559 / 0.12 USD)
+
+## ChatGPT Responded ##
+```
+
+First, I will create the README.md file by calling the `file_open_for_writing('README.md')` function. This file will act as the guide for the ChatGPT-4 model.
+
+Next, I will begin drafting the guide by providing a comprehensive introduction to Kubernetes StatefulSets. I will explain that a StatefulSet is a Kubernetes object that is used to manage stateful applications. It manages the deployment and scaling of a set of Pods, and provides guarantees about the ordering and uniqueness of these Pods.
+
+Following the introduction, I will describe in detail how to create a StatefulSet in Kubernetes. I will elaborate that users must first define a .yaml file for the StatefulSet configuration.
+
+Then, I will delve into the specifics of pod management in StatefulSets. I will point out that StatefulSets have a unique identity, that these identities are based on a sticky, stable network identity and that even if a StatefulSet’s Pod is rescheduled, its network ID will not change.
+
+After detailing pod management, I will discuss the role of Volumes in Kubernetes for persistent storage. I will note that Kubernetes Volumes enables data to survive container restarts, but these disappear when the Pod is deleted. However, the volume for each Pod is created using the pod name, which is consistent and based on the replica’s ordinal, and when a Pod is rescheduled, it's possible to resume from the same state, using persistent volume.
+
+Next, I will close the guide by providing cautionary points that users need to be aware of when working with StatefulSets. These points will include detailed information about deletion and scaling.
+
+Finally, I will finish the project by calling `project_finished(true)`.
+
+```
+
+
+GPT: Do you want to use this project outline?
+You (y/n): y
+
+TASKLIST: Creating a tasklist...
+GPT-API:  Waiting... OK! (+1336 tokens, total 4895 / 0.18 USD)
+TASKLIST: 1. In README.md: Create the README.md file. This will be a guide for the AI model, specifically ChatGPT-4, to follow when creating a Kubernetes StatefulSet.. Write an introduction about Kubernetes StatefulSet, explaining what it is and its purpose in managing stateful applications.. Detail how to create a StatefulSet in Kubernetes, describing the process of defining a .yaml file for the StatefulSet configuration.. Delve into the specificities of pod management in StatefulSets. Explain that StatefulSets have a unique identity, and elaborate on these identities and how they are managed.. Discuss the role of Kubernetes Volumes in providing persistent storage. Highlight that while Kubernetes Volumes enable data to survive container restarts, they disappear when the Pod is deleted. Connect this explanation with how StatefulSet manages the situation.. Close the guide with cautionary points users need to be aware of when working with StatefulSets. These should include information about deletion, scaling, and more.. Review the completed guide to ensure all information is accurate, detailed, and understandable for an AI model.. 
+
+GPT: Do you want to continue with this task list?
+You (y/n): y
+
+How do you want go though the task list?
+1) at once (faster, cheaper, less accurate)
+2) step by step (slower, more expensive, more accurate)
+Answer (1/2): 2
+
+TASK:     In README.md: Create the README.md file. This will be a guide for the AI model, specifically ChatGPT-4, to follow when creating a Kubernetes StatefulSet.. Write an introduction about Kubernetes StatefulSet, explaining what it is and its purpose in managing stateful applications.. Detail how to create a StatefulSet in Kubernetes, describing the process of defining a .yaml file for the StatefulSet configuration.. Delve into the specificities of pod management in StatefulSets. Explain that StatefulSets have a unique identity, and elaborate on these identities and how they are managed.. Discuss the role of Kubernetes Volumes in providing persistent storage. Highlight that while Kubernetes Volumes enable data to survive container restarts, they disappear when the Pod is deleted. Connect this explanation with how StatefulSet manages the situation.. Close the guide with cautionary points users need to be aware of when working with StatefulSets. These should include information about deletion, scaling, and more.. Review the completed guide to ensure all information is accurate, detailed, and understandable for an AI model.. 
+GPT-API:  Waiting... OK! (+2103 tokens, total 6998 / 0.24 USD)
+FUNCTION: Writing to file README.md...
+GPT-API:  Waiting... OK! (+2983 tokens, total 9981 / 0.35 USD)
+DONE:     Wrote to file README.md
+GPT-API:  Waiting... OK! (+2963 tokens, total 12944 / 0.44 USD)
+
+###############################
+# Task is finished!           #
+# Task tokens:          12944 #
+# Task price:        0.44 USD #
+# Total tokens:         12944 #
+# Total price:       0.44 USD #
+###############################
+
+
+## VERSION 2 (temp: 1.0) ##
+TASK:     In README.md: Create the README.md file. This will be a guide for the AI model, specifically ChatGPT-4, to follow when creating a Kubernetes StatefulSet.. Write an introduction about Kubernetes StatefulSet, explaining what it is and its purpose in managing stateful applications.. Detail how to create a StatefulSet in Kubernetes, describing the process of defining a .yaml file for the StatefulSet configuration.. Delve into the specificities of pod management in StatefulSets. Explain that StatefulSets have a unique identity, and elaborate on these identities and how they are managed.. Discuss the role of Kubernetes Volumes in providing persistent storage. Highlight that while Kubernetes Volumes enable data to survive container restarts, they disappear when the Pod is deleted. Connect this explanation with how StatefulSet manages the situation.. Close the guide with cautionary points users need to be aware of when working with StatefulSets. These should include information about deletion, scaling, and more.. Review the completed guide to ensure all information is accurate, detailed, and understandable for an AI model.. 
+GPT-API:  Waiting... OK! (+1913 tokens, total 14857 / 0.5 USD)
+FUNCTION: Writing to file README.md...
+GPT-API:  Waiting... OK! (+2706 tokens, total 17563 / 0.6 USD)
+DONE:     Wrote to file README.md
+GPT-API:  Waiting... OK! (+2686 tokens, total 20249 / 0.68 USD)
+
+###############################
+# Task is finished!           #
+# Task tokens:           7305 #
+# Task price:        0.24 USD #
+# Total tokens:         20249 #
+# Total price:       0.68 USD #
+###############################
+
+
+## VERSION 3 (temp: 1.07) ##
+TASK:     In README.md: Create the README.md file. This will be a guide for the AI model, specifically ChatGPT-4, to follow when creating a Kubernetes StatefulSet.. Write an introduction about Kubernetes StatefulSet, explaining what it is and its purpose in managing stateful applications.. Detail how to create a StatefulSet in Kubernetes, describing the process of defining a .yaml file for the StatefulSet configuration.. Delve into the specificities of pod management in StatefulSets. Explain that StatefulSets have a unique identity, and elaborate on these identities and how they are managed.. Discuss the role of Kubernetes Volumes in providing persistent storage. Highlight that while Kubernetes Volumes enable data to survive container restarts, they disappear when the Pod is deleted. Connect this explanation with how StatefulSet manages the situation.. Close the guide with cautionary points users need to be aware of when working with StatefulSets. These should include information about deletion, scaling, and more.. Review the completed guide to ensure all information is accurate, detailed, and understandable for an AI model.. 
+GPT-API:  Waiting... OK! (+1913 tokens, total 22162 / 0.74 USD)
+FUNCTION: Writing to file README.md...
+GPT-API:  Waiting... OK! (+2330 tokens, total 24492 / 0.82 USD)
+DONE:     Wrote to file README.md
+GPT-API:  Waiting... OK! (+2310 tokens, total 26802 / 0.89 USD)
+
+###############################
+# Task is finished!           #
+# Task tokens:           6553 #
+# Task price:        0.21 USD #
+# Total tokens:         26802 #
+# Total price:       0.89 USD #
+###############################
+
+
+# ALL VERSIONS FINISHED ##
+You can find all versions here:
+- Version 1: /home/a/code/gpt-autopilot/versions/0004/v1
+- Version 2: /home/a/code/gpt-autopilot/versions/0004/v2
+- Version 3: /home/a/code/gpt-autopilot/versions/0004/v3
+
+If you want to continue, please input version number to continue from (1-3) (or 'exit' to quit): exit
+16:53:35 a@fedora ~/code/gpt-autopilot master $

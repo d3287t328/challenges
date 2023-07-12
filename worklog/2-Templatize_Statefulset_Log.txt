@@ -1,0 +1,90 @@
+# note after this was created I tested with 
+# helm lint 2-my-app 
+# helm template 2-my-app
+# and this passed my acceptance criteria
+
+
+remake this stateful set as helm chart. Pass accept 3 or more values.
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: nginx
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  serviceName: "nginx"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+          name: web
+
+ChatGPT
+The given StatefulSet can be converted into a Helm Chart and parameterized to accept values via a values.yaml file. Let's assume the three values to be parameterized are replicaCount, serviceName, and image.
+
+Directory structure of the Helm chart:
+bash
+Copy code
+nginx/
+├── Chart.yaml
+├── values.yaml
+└── templates
+    └── statefulset.yaml
+Content of each file:
+Chart.yaml
+yaml
+Copy code
+apiVersion: v2
+name: nginx
+description: A Helm chart for a simple Nginx StatefulSet application
+type: application
+version: 1.0.0
+values.yaml
+yaml
+Copy code
+replicaCount: 1
+serviceName: "nginx"
+image: "nginx:1.14.2"
+templates/statefulset.yaml
+yaml
+Copy code
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Chart.Name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+  serviceName: {{ .Values.serviceName }}
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: {{ .Values.image }}
+        ports:
+        - containerPort: 80
+          name: web
+In this configuration, {{ .Chart.Name }}, {{ .Values.serviceName }}, {{ .Values.replicaCount }}, and {{ .Values.image }} are templates that Helm will replace with actual values at runtime. These values come from the values.yaml file and the Chart.yaml file (for .Chart.Name).
+
+You can modify the values.yaml file to adjust the values that Helm uses when installing the chart.
+
+To install the Helm chart into your Kubernetes cluster, you can use the helm install command from the parent directory of your chart's directory (nginx in this case):
+
+bash
+Copy code
+helm install release-name ./nginx
+Replace release-name with the name you want to give to this release of your application.
