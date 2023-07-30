@@ -6,7 +6,7 @@ def validate_and_update_values(file_path, keys):
     if not os.path.isfile(file_path):
         print(f"The file '{file_path}' does not exist in the current directory.")
         return
-    
+
     with open(file_path, 'r') as file:
         try:
             data = yaml.safe_load(file)
@@ -15,7 +15,7 @@ def validate_and_update_values(file_path, keys):
             return
 
     if any(key not in data for key in keys):
-        print(f"Validation failed. Some keys are missing in the YAML file.")
+        print("Validation failed. Some keys are missing in the YAML file.")
         return
 
     try:
